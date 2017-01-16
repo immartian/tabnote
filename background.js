@@ -1,4 +1,15 @@
 // background.js
+function loadContent(){
+
+
+}
+
+function saveContent(){
+
+  alert("content saved!");
+
+}
+
 function focusOrCreateTab(url) {
   chrome.windows.getAll({"populate":true}, function(windows) {
     var existing_tab = null;
@@ -17,7 +28,9 @@ function focusOrCreateTab(url) {
 
     } else {
       chrome.tabs.create({"url":url, "selected":true});
+      loadContent();
     }
+
   });
 }
 // Called when the user clicks on the browser action.
@@ -30,5 +43,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
     chrome.tabs.sendMessage(activeTab.id, {"message": "clicked_browser_action"});
     var manager_url = chrome.extension.getURL("noter.html");
     focusOrCreateTab(manager_url);
+    var mySave= SetInterval(saveContent,3000);
+
   });
 });
